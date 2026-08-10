@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Video2DoorTraversal turns one handheld RGB video into an articulated door twin, simulator-verified demonstrations, and a real-world wheel-legged door traversal policy.">
+  <meta name="keywords" content="robotics, door traversal, real-to-sim-to-real, articulated digital twin, one-shot learning, mobile manipulation">
+  <meta name="author" content="Xincheng Tang, Yiji Chen, Youhan Xie, Wanyu Li, Zhengjie Shu, Lai Jiang, Wenkang Hu, Yitong Li, Jinchuang Zhang, Xibin Song, Ruigang Yang">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://video2doortraversal.github.io/">
+  <meta property="og:title" content="Video2DoorTraversal">
+  <meta property="og:description" content="Articulated Door Twins for Real-to-Sim-to-Real Wheel-Legged Door Traversal from a Single Video.">
+  <meta property="og:image" content="https://video2doortraversal.github.io/assets/images/hero-door-2.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Video2DoorTraversal">
+  <meta name="twitter:description" content="One video. One articulated door twin. One complete traversal policy.">
+  <meta name="twitter:image" content="https://video2doortraversal.github.io/assets/images/hero-door-2.webp">
+  <link rel="canonical" href="https://video2doortraversal.github.io/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <title>Video2DoorTraversal</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Video2DoorTraversal: Articulated Door Twins for Real-to-Sim-to-Real Wheel-Legged Door Traversal from a Single Video",
+    "datePublished": "2026",
+    "url": "https://video2doortraversal.github.io/",
+    "image": "https://video2doortraversal.github.io/assets/images/hero-door-2.webp",
+    "author": [
+      {"@type":"Person","name":"Xincheng Tang"},
+      {"@type":"Person","name":"Yiji Chen"},
+      {"@type":"Person","name":"Youhan Xie"},
+      {"@type":"Person","name":"Wanyu Li"},
+      {"@type":"Person","name":"Zhengjie Shu"},
+      {"@type":"Person","name":"Lai Jiang"},
+      {"@type":"Person","name":"Wenkang Hu"},
+      {"@type":"Person","name":"Yitong Li"},
+      {"@type":"Person","name":"Jinchuang Zhang"},
+      {"@type":"Person","name":"Xibin Song"},
+      {"@type":"Person","name":"Ruigang Yang"}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar" data-topbar>
+    <a class="wordmark" href="#hero" aria-label="Video2DoorTraversal home">
+      <span class="wordmark-door" aria-hidden="true"></span>
+      <span>Video2DoorTraversal</span>
+    </a>
+    <button class="menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false" data-menu-button>
+      <span></span><span></span>
+    </button>
+    <nav class="topnav" aria-label="Primary navigation" data-menu>
+      <a href="#overview">Overview</a>
+      <a href="#method">Method</a>
+      <a href="#doortwin">DoorTwin</a>
+      <a href="#policy">Policy</a>
+      <a href="#results">Results</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+  </header>
+
+  <nav class="rail" aria-label="Page progress">
+    <a class="rail-link is-active" href="#hero" data-section-link="hero"><span>01</span>Intro</a>
+    <a class="rail-link" href="#overview" data-section-link="overview"><span>02</span>Overview</a>
+    <a class="rail-link" href="#method" data-section-link="method"><span>03</span>Method</a>
+    <a class="rail-link" href="#doortwin" data-section-link="doortwin"><span>04</span>DoorTwin</a>
+    <a class="rail-link" href="#policy" data-section-link="policy"><span>05</span>Policy</a>
+    <a class="rail-link" href="#results" data-section-link="results"><span>06</span>Results</a>
+    <a class="rail-link" href="#bibtex" data-section-link="bibtex"><span>07</span>Reference</a>
+  </nav>
+
+  <main id="main">
+    <section class="hero observed-section" id="hero" data-observe-section>
+      <div class="hero-media" aria-hidden="true">
+        <img src="assets/images/hero-door-1.webp" alt="">
+        <img src="assets/images/hero-door-2.webp" alt="">
+        <img src="assets/images/hero-door-3.webp" alt="">
+        <img src="assets/images/hero-door-4.webp" alt="">
+      </div>
+      <div class="hero-vignette" aria-hidden="true"></div>
+      <div class="hero-content">
+        <h1><span>Video2</span><span class="title-door">Door</span><span>Traversal</span></h1>
+        <p class="paper-title">Articulated Door Twins for Real-to-Sim-to-Real<br>&nbsp;Wheel-Legged Door Traversal from a Single Video</p>
+
+        <div class="authors" aria-label="Paper authors">
+          <span>Xincheng Tang</span><span>Yiji Chen</span><span>Youhan Xie</span>
+          <span>Wanyu Li</span><span>Zhengjie Shu</span><span>Lai Jiang</span>
+          <span>Wenkang Hu</span><span>Yitong Li</span><span>Jinchuang Zhang</span>
+          <span>Xibin Song</span><span>Ruigang Yang<sup>&dagger;</sup></span>
+        </div>
+        <div class="affiliations">
+          <a href="https://en.sjtu.edu.cn/" target="_blank" rel="noopener noreferrer"><sup>1</sup> Shanghai Jiao Tong University</a>
+          <a href="https://www.sdu.edu.cn/" target="_blank" rel="noopener noreferrer"><sup>2</sup> Shandong University</a>
+        </div>
+        <p class="author-note"><sup>&dagger;</sup> Corresponding author.</p>
+
+        <div class="resource-actions" aria-label="Project resources">
+          <!-- Replace these disabled controls with links when the public URLs are ready. -->
+          <span class="resource-button is-disabled" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h9l5 5v13H5zM14 3v5h5M8 13h8M8 17h6"/></svg>
+            arXiv <small>Coming soon</small>
+          </span>
+          <span class="resource-button resource-button-dark is-disabled" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9 4 12l4 3M16 9l4 3-4 3M14 5l-4 14"/></svg>
+            Code <small>Coming soon</small>
+          </span>
+        </div>
+
+        <p class="hero-tagline"><strong>One-shot</strong><span aria-hidden="true">&middot;</span> Real-to-Sim-to-Real Door Traversal</p>
+
+        <div class="metric-strip" aria-label="Key results">
+          <div class="metric metric-shot"><strong>ONE</strong><span>handheld RGB video</span></div>
+          <div class="metric"><strong>96.57<em>%</em></strong><span>average real-door success</span></div>
+          <div class="metric"><strong>80.95<em>%</em></strong><span>zero-shot unseen doors</span></div>
+          <div class="metric"><strong>&sim;13<em>s</em></strong><span>end-to-end traversal</span></div>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#overview"><span>Scroll to traverse</span><i aria-hidden="true"></i></a>
+    </section>
+
+    <section class="video-section observed-section" id="overview" data-observe-section>
+      <div class="container">
+        <p class="statement reveal">One video builds the door twin. One policy then succeeds again and again in the real world.</p>
+        <div class="overview-proof reveal">
+          <strong>10/10</strong>
+          <div>
+            <span>Successful one-shot real-world rollouts</span>
+            <p>Repeated closed-loop traversal demonstrates stable contact, coordinated whole-body control and robust real-world execution.</p>
+          </div>
+        </div>
+        <div class="feature-video reveal">
+          <video controls muted playsinline preload="metadata" poster="assets/images/poster-one-shot.jpg" aria-label="One-shot real-world door traversal rollouts">
+            <source src="assets/videos/one-shot-real.mp4" type="video/mp4">
+            Your browser does not support HTML video.
+          </video>
+          <div class="video-label"><span>One-shot real-world rollouts</span><b>10 / 10 success</b></div>
+        </div>
+        <p class="video-caption reveal">No per-door teleoperation and no real-world fine-tuning. A single RGB capture seeds a policy that remains stable across repeated trials.</p>
+      </div>
+    </section>
+
+    <section class="section abstract-section">
+      <div class="container narrow">
+        <div class="section-heading reveal">
+          <p class="kicker">Abstract</p>
+          <h2>From a phone video to an articulated twin&mdash;and all the way through the door.</h2>
+        </div>
+        <div class="abstract-copy reveal">
+          <p class="lead">Door traversal is not a single interaction. The robot must approach, find and rotate a handle, move its whole body with the door, and clear a narrow passage without losing contact.</p>
+          <p><strong>Video2DoorTraversal</strong> is a one-shot real-to-sim-to-real framework for this long-horizon, contact-rich task. From one short handheld RGB video, <strong>DoorTwin</strong> reconstructs an instance-aligned, articulated and simulation-ready door. A simulation-in-the-loop agent turns the recovered articulation into executable demonstrations, while <strong>ArticuACT</strong> learns coordinated base, arm and gripper control from onboard observations.</p>
+          <p>The result is a complete door-to-policy pipeline: one capture, scalable simulation, and closed-loop traversal on a real wheel-legged mobile manipulator.</p>
+        </div>
+        <div class="one-shot-callout reveal">
+          <span class="callout-index">ONE-SHOT</span>
+          <p><strong>One video is a specification, not a demonstration.</strong> It describes the door instance; the simulator generates the robot experience.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section method-section observed-section" id="method" data-observe-section>
+      <div class="container">
+        <div class="section-heading section-heading-wide reveal">
+          <p class="kicker">Method</p>
+          <h2>A single video becomes a closed-loop traversal policy in three stages.</h2>
+        </div>
+
+        <div class="pipeline reveal" aria-label="Video2DoorTraversal pipeline">
+          <article class="pipeline-stage stage-capture">
+            <span class="stage-number">01</span>
+            <div class="stage-icon capture-icon" aria-hidden="true"><i></i></div>
+            <p class="stage-label">Single RGB video</p>
+            <h3>Capture the door once</h3>
+            <p>A short handheld scan provides multi-view visual evidence of the door, frame, handle and surrounding context.</p>
+          </article>
+          <span class="pipeline-arrow" aria-hidden="true"></span>
+          <article class="pipeline-stage stage-twin">
+            <span class="stage-number">02</span>
+            <div class="stage-icon twin-icon" aria-hidden="true"><i></i></div>
+            <p class="stage-label">DoorTwin</p>
+            <h3>Build an articulated twin</h3>
+            <p>Geometry, appearance, hinge structure and handle placement become a simulation-ready, instance-specific asset.</p>
+          </article>
+          <span class="pipeline-arrow" aria-hidden="true"></span>
+          <article class="pipeline-stage stage-policy">
+            <span class="stage-number">03</span>
+            <div class="stage-icon policy-icon" aria-hidden="true"><i></i><b></b></div>
+            <p class="stage-label">Agentic expert + ArticuACT</p>
+            <h3>Generate, learn, deploy</h3>
+            <p>Simulator-verified skills create robust demonstrations that train coordinated whole-body control for the real robot.</p>
+          </article>
+        </div>
+
+        <div class="method-principles reveal">
+          <div><span>01</span><p><strong>Instance grounded</strong> in the observed door rather than a generic procedural asset.</p></div>
+          <div><span>02</span><p><strong>Physics verified</strong> through generate, execute, diagnose and refine loops.</p></div>
+          <div><span>03</span><p><strong>Closed loop</strong> from onboard depth and proprioception at deployment.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section twin-section observed-section" id="doortwin" data-observe-section>
+      <div class="container">
+        <div class="split-heading reveal">
+          <div>
+            <p class="kicker">Stage 01 &middot; DoorTwin</p>
+            <h2>Recover what makes this door <em>this</em> door.</h2>
+          </div>
+          <p>DoorTwin turns the observed instance into a usable articulated asset&mdash;preserving task-relevant scale, part relationships, hinge direction, handle placement and appearance.</p>
+        </div>
+
+        <figure class="figure-card figure-card-wide reveal">
+          <img src="assets/images/door-twin-comparison.png" alt="Qualitative comparison between real door references, DoorTwin and articulated asset generation baselines" loading="lazy">
+          <figcaption><span>Instance fidelity</span> DoorTwin preserves the door structure and appearance more faithfully than generic articulated generation baselines.</figcaption>
+        </figure>
+
+        <div class="twin-detail-grid">
+          <article class="detail-card reveal">
+            <span class="detail-index">A</span>
+            <h3>Video-grounded reconstruction</h3>
+            <p>Multi-view RGB evidence anchors the panel, frame and handle into a consistent instance representation suitable for downstream articulation modeling.</p>
+          </article>
+          <article class="detail-card reveal">
+            <span class="detail-index">B</span>
+            <h3>Articulation-aware generation</h3>
+            <p>The asset is built around task-critical joints and local component relationships, not just visual resemblance.</p>
+          </article>
+          <article class="detail-card reveal">
+            <span class="detail-index">C</span>
+            <h3>Render-and-critic refinement</h3>
+            <p>A reference-view critic checks silhouette, handle type, proportions and placement, then feeds structured corrections back to generation.</p>
+          </article>
+        </div>
+
+        <figure class="figure-card critic-card reveal">
+          <div class="figure-meta"><span>Iterative visual critic</span><b>Reference &rarr; Critic 1 &rarr; Critic 2 &rarr; Critic 3</b></div>
+          <img src="assets/images/critic-refinement.png" alt="DoorTwin reference-view critic progressively refining a simulated door" loading="lazy">
+          <figcaption>Each pass corrects missing parts, local geometry and placement while preserving the validated articulation.</figcaption>
+        </figure>
+
+        <figure class="research-video-card reveal">
+          <video controls muted playsinline preload="metadata" poster="assets/images/poster-doortwin.jpg">
+            <source src="assets/videos/doortwin.mp4" type="video/mp4">
+            Your browser does not support HTML video.
+          </video>
+          <figcaption><span>DoorTwin in motion</span>Articulated, simulation-ready door assets reconstructed from visual observations.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section agent-section">
+      <div class="container">
+        <div class="split-heading reveal">
+          <div>
+            <p class="kicker">Stage 02 &middot; Agentic Expert</p>
+            <h2>The video defines the door. The simulator creates the experience.</h2>
+          </div>
+          <p>A simulation-in-the-loop agent instantiates a parameterized traversal program, diagnoses failed rollouts and makes bounded revisions until the behavior is physically executable.</p>
+        </div>
+
+        <div class="agent-layout">
+          <figure class="parallel-card reveal">
+            <img src="assets/images/parallel-generation.webp" alt="Hundreds of parallel door traversal simulation environments" loading="lazy">
+            <figcaption><strong>Parallel domain randomization</strong><span>Position &middot; friction &middot; resistance &middot; sensing</span></figcaption>
+          </figure>
+          <div class="loop-card reveal">
+            <div class="loop-center">SIM<br>LOOP</div>
+            <ol>
+              <li><span>01</span><p><strong>Execute</strong> skill program</p></li>
+              <li><span>02</span><p><strong>Diagnose</strong> failure</p></li>
+              <li><span>03</span><p><strong>Revise</strong> parameters</p></li>
+              <li><span>04</span><p><strong>Collect</strong> success</p></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="skill-sequence reveal" aria-label="Door traversal skill phases">
+          <span>Approach</span><i></i><span>Contact</span><i></i><span>Grasp</span><i></i><span>Rotate</span><i></i><span>Open</span><i></i><span>Traverse</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section policy-section observed-section" id="policy" data-observe-section>
+      <div class="container">
+        <div class="split-heading reveal">
+          <div>
+            <p class="kicker">Stage 03 &middot; ArticuACT</p>
+            <h2>See globally. Interact locally. Move as one body.</h2>
+          </div>
+          <p>ArticuACT uses front- and wrist-view depth with robot proprioception to predict coordinated base velocity, arm joints and gripper commands over long horizons.</p>
+        </div>
+
+        <div class="policy-grid">
+          <article class="policy-card reveal">
+            <span class="policy-chip">Geometric grounding</span>
+            <h3>Robot-centric camera conditioning</h3>
+            <p>Pixel-aligned Pl&uuml;cker ray maps express both camera views in the shared robot-base frame, reducing ambiguity under camera perturbations.</p>
+            <div class="ray-graphic" aria-hidden="true"><span></span><i></i><i></i><i></i><i></i><b></b></div>
+          </article>
+          <article class="policy-card policy-card-orange reveal">
+            <span class="policy-chip">Interaction awareness</span>
+            <h3>Predict progress, not only motion</h3>
+            <p>Auxiliary future states supervise stable contact, handle rotation and door-opening progress without changing the deployment control interface.</p>
+            <div class="state-bars" aria-hidden="true">
+              <span style="--level:92%">Contact<i></i></span>
+              <span style="--level:78%">Handle<i></i></span>
+              <span style="--level:64%">Door<i></i></span>
+            </div>
+          </article>
+        </div>
+
+        <figure class="figure-card timeline-card reveal">
+          <img src="assets/images/interaction-timeline.png" alt="Real robot traversal snapshots aligned with velocity and interaction-state predictions" loading="lazy">
+          <figcaption><span>Interaction-aware execution</span> Contact, handle rotation and door-opening progress align with distinct phases of the real traversal.</figcaption>
+        </figure>
+
+        <figure class="research-video-card policy-video reveal">
+          <video controls muted playsinline preload="metadata" poster="assets/images/poster-policy-robustness.jpg">
+            <source src="assets/videos/policy-robustness.mp4" type="video/mp4">
+            Your browser does not support HTML video.
+          </video>
+          <figcaption><span>Emergent recovery behavior</span>The closed-loop policy adjusts its interaction after an imperfect handle contact instead of replaying a fixed motion.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section results-section observed-section" id="results" data-observe-section>
+      <div class="container">
+        <div class="section-heading section-heading-wide reveal">
+          <p class="kicker">Results</p>
+          <h2>One reconstructed door twin supports robust real-world traversal and zero-shot transfer.</h2>
+        </div>
+
+        <div class="result-hero reveal">
+          <div><strong>96.57<sup>%</sup></strong><span>Average success across five real doors</span></div>
+          <div class="result-divider" aria-hidden="true"></div>
+          <div><strong>80.95<sup>%</sup></strong><span>Zero-shot success on structurally similar unseen doors</span></div>
+        </div>
+
+        <div class="chart-grid">
+          <figure class="chart-card reveal">
+            <div class="chart-heading"><span>Policy ablation</span><b>Joint-space control reaches 97.27%</b></div>
+            <img src="assets/images/policy-ablation.png" alt="Traversal success rate for policy ablations and command spaces" loading="lazy">
+            <figcaption>Robot-centric camera conditioning and interaction-state supervision provide complementary gains over vanilla ACT.</figcaption>
+          </figure>
+          <figure class="chart-card reveal">
+            <div class="chart-heading"><span>Data scaling</span><b>Performance saturates beyond 200 demonstrations</b></div>
+            <img src="assets/images/demonstration-scaling.png" alt="Door traversal success rate as the number of demonstrations increases" loading="lazy">
+            <figcaption>Simulator-verified demonstrations scale policy reliability from 0% to 97.66%.</figcaption>
+          </figure>
+        </div>
+
+        <div class="experiment-video-grid">
+          <figure class="research-video-card reveal">
+            <video controls muted playsinline preload="metadata" poster="assets/images/poster-zero-shot.jpg">
+              <source src="assets/videos/zero-shot-real.mp4" type="video/mp4">
+              Your browser does not support HTML video.
+            </video>
+            <figcaption><span>Zero-shot transfer</span>The learned policy transfers to structurally similar doors without retraining.</figcaption>
+          </figure>
+        </div>
+
+        <div class="zero-shot-band reveal">
+          <div class="zero-shot-copy">
+            <p class="kicker">The one-shot advantage</p>
+            <h3>Capture once. Train in simulation. Transfer beyond the captured door.</h3>
+            <p>A policy trained from one reconstructed door can directly traverse structurally similar unseen doors without additional trajectory generation or real-world fine-tuning.</p>
+          </div>
+          <div class="door-glyphs" aria-label="One source door transferring to three unseen doors">
+            <div class="source-door"><span></span><small>Source</small></div>
+            <i aria-hidden="true"></i>
+            <div><span></span><small>25 / 35</small></div>
+            <div><span></span><small>31 / 35</small></div>
+            <div><span></span><small>29 / 35</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section takeaways-section">
+      <div class="container">
+        <p class="kicker reveal">In one line</p>
+        <p class="closing-statement reveal"><span>ONE VIDEO</span> gives the robot a door it can simulate, practice and finally traverse in the real world.</p>
+      </div>
+    </section>
+
+    <section class="section bibtex-section observed-section" id="bibtex" data-observe-section>
+      <div class="container narrow">
+        <div class="bibtex-heading reveal">
+          <div>
+            <p class="kicker">Reference</p>
+            <h2>BibTeX</h2>
+          </div>
+          <button class="copy-button" type="button" data-copy-button>Copy citation</button>
+        </div>
+        <pre class="bibtex reveal"><code id="bibtex-code">@article{tang2026video2doortraversal,
+  title   = {Video2DoorTraversal: Articulated Door Twins for
+             Real-to-Sim-to-Real Wheel-Legged Door Traversal
+             from a Single Video},
+  author  = {Tang, Xincheng and Chen, Yiji and Xie, Youhan and
+             Li, Wanyu and Shu, Zhengjie and Jiang, Lai and
+             Hu, Wenkang and Li, Yitong and Zhang, Jinchuang and
+             Song, Xibin and Yang, Ruigang},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+        <p class="citation-note reveal">The arXiv identifier and publication venue will be added when available.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <a class="footer-mark" href="#hero"><span class="wordmark-door" aria-hidden="true"></span>Video2DoorTraversal</a>
+      <p>One-shot articulated door twins for wheel-legged traversal.</p>
+      <p class="footer-credit">Website design inspired by the clarity and narrative pacing of academic project pages such as <a href="https://robosnap.github.io/" target="_blank" rel="noopener noreferrer">RoboSNAP</a>.</p>
+    </div>
+  </footer>
+
+  <button class="back-to-top" type="button" aria-label="Back to top" data-back-to-top>&uarr;</button>
+  <script src="assets/js/site.js" defer></script>
+</body>
+</html>
