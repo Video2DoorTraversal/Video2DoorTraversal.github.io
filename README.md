@@ -20,4 +20,13 @@ Then open <http://localhost:8000>.
 
 ## Media
 
-The homepage background and embedded experiment videos were exported from the project presentation. Web-ready images live in `assets/images/`, and browser-compatible H.264 videos live in `assets/videos/`.
+The page presents the project in the following order:
+
+1. four-door hero video;
+2. system overview followed by the paper abstract;
+3. the paper pipeline figure;
+4. three DoorTwin videos in separate rows;
+5. two simulation videos;
+6. diverse real-world door types, 10/10 repeated trials, and zero-shot transfer.
+
+Web-ready images live in `assets/images/`. Browser-compatible H.264 videos live in `assets/videos/` and use `preload="metadata"` outside the hero to avoid downloading every experiment video on initial page load.
