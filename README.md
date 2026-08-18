@@ -25,7 +25,7 @@ The page presents the project in the following order:
 1. four-door hero video;
 2. system overview followed by the paper abstract;
 3. the paper pipeline figure;
-4. three DoorTwin videos in separate rows;
+4. DoorTwin overview and comparison videos in separate rows;
 5. two simulation videos;
 6. diverse real-world door types, 10/10 repeated trials, and zero-shot transfer.
 
