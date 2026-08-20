@@ -1,6 +1,6 @@
 # Video2DoorTraversal project website
 
-Official project page for **Video2DoorTraversal: Articulated Door Twins for Real-to-Sim-to-Real Wheel-Legged Door Traversal from a Single Video**.
+Official project page for **Video2DoorTraversal: Push Door Traversal via Simulated Door Twins**.
 
 The site is a dependency-free static page hosted with GitHub Pages.
 
